@@ -69,6 +69,11 @@ else:
     print(yr,"is not a leap year")
 
 # 9. Display multiplication tables from 1 to 10 using loops.
+print("\nMultiplication tables from 1 to 10:")
+for i in range(1, 11):
+    for j in range(1, 11):
+        print(f"{j} x {i} = {j*i:<3}", end="\t")
+    print()
 
 # 10. Compute the factorial of a number using a loop.
 num = int(input("\nEnter a number: "))
@@ -87,11 +92,11 @@ print()
 
 # 12. Calculate the sum of the digits of a given number.
 num = int(input("\nEnter a number: "))
-n, sum = num, 0
+n, sumd = num, 0
 while n > 0:
-    sum += n % 10
+    sumd += n % 10
     n //= 10
-print("Sum of digits of",num,"=",sum)
+print("Sum of digits of",num,"=",sumd)
 
 # 13. Reverse a given number and print it.
 n, rev = num, 0
@@ -112,12 +117,12 @@ num = int(input("\nEnter a number: "))
 if num > 1:
     for i in range(2, num):
         if num % i == 0:
-            print(num,"is not prime")
+            print(num,"is not q prime number")
             break
     else:
-        print(num,"is prime")
+        print(num,"is a prime number")
 else:
-    print(num,"is not prime")
+    print(num,"is not a prime number")
 
 # 16. Create a list, append elements, remove elements, find sum, max, min, and sort the list.
 lst = [50, 26, 84]
