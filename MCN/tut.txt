@@ -1,0 +1,49 @@
+1.. High Latency Channels: In networks where the propagation delay is very long, such as satellite links, retransmitting a frame can take a significant amount of time. By the time a "Negative Acknowledgement" (NAK) is sent back and the sender retransmits, a large delay has occurred, which can severely degrade performance. Error correction allows the receiver to fix the data immediately without waiting for a retransmission.
+Noisy/Low-Quality Links: On channels with high error rates, such as wireless links, retransmitted frames are also likely to be damaged. If the probability of a frame being corrupted is high, multiple retransmissions might be required for a single piece of data, wasting bandwidth and increasing congestion. In these cases, it is more efficient to include redundant bits to correct the errors on the fly.
+Additionally, error correction is used in simplex links (one-way communication) where there is no return path to request a retransmission, or in real-time applications like streaming video where there is no time to wait for a retransmitted packet before it must be displayed.
+
+2..The Nyquist theorem is true for both high-quality single-mode optical fiber and copper wires.
+According to the textbook and fundamental principles of data communication, the Nyquist theorem is a mathematical property and is not dependent on the specific technology or transmission medium being used.
+Key Reasons Why it Applies to All Media:
+Mathematical Foundation: The theorem states that if an arbitrary signal is passed through a low-pass filter of bandwidth B, the signal can be completely reconstructed by taking 2B samples per second. This logic holds regardless of whether the signal is an electrical pulse in copper or a light pulse in fiber.
+Finite Bandwidth: Every physical medium, including single-mode optical fiber, has a finite bandwidth. While fiber offers much higher bandwidth than copper, it is still subject to the limit that the maximum data rate of a noiseless channel is 2B \log_2 L bits per second (where L is the number of discrete signal levels).
+Physical Reality: Even "high-quality" fiber acts as a filter that limits the frequencies that can pass through it. Therefore, the sampling rate required to capture all information remains tied to that bandwidth as defined by Nyquist.
+
+3..In packet-switched networks, the primary advantage of store-and-forward switches over cut-through switches regarding damaged frames is their ability to perform error detection before forwarding the data.
+Store-and-Forward Switching
+When a switch uses store-and-forward logic, it must receive the entire frame and buffer it in its memory before it begins transmitting it to the next hop.
+Error Detection: Once the full frame is received, the switch calculates the checksum (such as a Cyclic Redundancy Check or CRC) and compares it to the value in the frame's trailer.
+Handling Damaged Frames: If the switch detects that the frame has been corrupted during transmission (a mismatch in the checksum), it simply discards the frame. This prevents the damaged data from traveling further through the network and consuming valuable bandwidth on subsequent links.
+Cut-Through Switching
+In contrast, a cut-through switch starts forwarding the frame as soon as the destination address (found at the beginning of the frame header) is recognized.
+The Disadvantage: Because the switch starts transmitting the beginning of the frame while the end is still arriving, it cannot verify the checksum (which is at the very end of the frame) before the forwarding process begins.
+Wasted Capacity: If the frame is damaged, a cut-through switch will unknowingly forward the corrupted bits all the way to the destination. The frame will eventually be discarded by the destination host or a later store-and-forward switch, but in the meantime, network capacity has been wasted across multiple links.
+
+4..To determine which communications are possible, we must consider the constraints of a wireless environment where interference occurs if a station receives two transmissions at the same time. A station cannot receive a frame if it is within range of another station currently transmitting.
+First, we visualize the connectivity based on the provided data:
+A connects to: {B, C, D, E}
+B connects to: {A, C, E}
+C connects to: {A, B, D}
+D connects to: {A, C, E}
+E connects to: {A, B, D}
+(i) When A is sending to B
+Station A is transmitting. Any station in A’s range (B, C, D, E) will be interfered with if they try to receive a different transmission.
+Station B is receiving. Any station in B’s range (C, E) must remain quiet to avoid causing a collision at B.
+Other possible communications: Since all other stations (C, D, E) are within range of A, they will all detect A's signal as interference or a busy medium.
+Result: No other communications are possible because all potential receivers (C, D, E) are within range of the transmitter A, and all potential transmitters (C, E) would interfere with the receiver B.
+
+(ii) When B is sending to A
+Station B is transmitting. It reaches its neighbors A, C, and E.
+Station A is receiving. It is in range of all stations, meaning any other transmission in the network would cause a collision at A.
+Station C and Station E are within range of B and will detect the medium as busy.
+Station D is not in range of B. However, for D to send to anyone, the receiver must be able to hear D without interference.
+If D sends to C, C will experience a collision because it is already hearing B.
+If D sends to E, E will experience a collision because it is already hearing B.
+Result: No other communications are possible because the receiver (A) is within range of every other station in the network, making it sensitive to any other concurrent transmission.
+
+(iii) When B is sending to C
+Station B is transmitting. Stations A, C, and E are in range of B's signal.
+Station C is receiving. Only stations in C's range (A, B, D) can interfere with it.
+Analysis of other pairs:
+D to E: Station D is not in range of the transmitter B, and the receiver E is not in range of the transmitter B. Furthermore, the original transmitter B is not in range of the new receiver E, and the new transmitter D is not in range of the original receiver C.
+Result: D sending to E is possible. D and E are both outside the range of C, so D's transmission will not interfere with C's reception. Likewise, B's transmission to C will not interfere with E's reception of D's signal.
