@@ -1,0 +1,117 @@
+\documentclass[a4paper,10pt]{article}
+
+% ----- PACKAGES -----
+\usepackage[left=0.5in, right=0.5in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo} % Elegant Palatino font
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% ----- COLORS -----
+\definecolor{primary}{HTML}{1A4B84} % Professional Navy Blue
+\definecolor{linkcolor}{HTML}{0056b3} % Blue for clickable links
+
+\hypersetup{
+    colorlinks=true, 
+    linkcolor=primary,
+    urlcolor=linkcolor
+}
+
+% ----- FORMATTING -----
+\pagestyle{empty} % Remove page numbers
+\raggedright % Left align text
+\linespread{1.05} % Balanced line spacing
+
+% Section formatting
+\titleformat{\section}{\large\bfseries\color{primary}\uppercase}{}{0em}{}[\vspace{-0.5ex}\color{primary}\titlerule\vspace{1ex}]
+\titlespacing*{\section}{0pt}{1.5ex}{1ex}
+
+% Bullet point formatting
+\setlist[itemize]{leftmargin=*, label={\small\color{primary}\textbullet}, itemsep=2pt, parsep=0pt, topsep=2pt}
+
+\begin{document}
+
+% ================= HEADER =================
+\begin{center}
+    {\Huge \textbf{\color{primary} RAJASHREE RAJESH JARANDE}} \\[4pt]
+    {\large Full-Stack Developer \& Computer Engineering Student} \\[6pt]
+    \small
+    \href{mailto:jaranderajashree@gmail.com}{jaranderajashree@gmail.com} \quad | \quad
+    \href{https://linkedin.com/in/rajashree-jarande-636459286/}{linkedin.com/in/rajashree-jarande} \quad | \quad
+    \href{https://github.com/awk-way}{github.com/awk-way} \quad 
+\end{center}
+
+% ================= SUMMARY =================
+\section*{Professional Summary}
+Dynamic and detail-oriented Computer Engineering student specializing in full-stack web development and AI-driven applications. Proven ability to architect scalable solutions using modern frameworks like Next.js, React, and Python. Passionate about translating complex technical challenges into intuitive, user-centric digital experiences through clean code and agile methodologies.
+
+% ================= EDUCATION =================
+\section*{Education}
+\noindent \textbf{Bachelor of Computer Engineering} \hfill \textit{Jul 2024 -- Jun 2027} \\
+\textit{Goa Engineering College} \hfill CGPA: 8.16
+
+\vspace{1ex}
+\noindent \textbf{Diploma in Computer Engineering} \hfill \textit{Sep 2021 -- Jul 2024} \\
+\textit{Agnel Polytechnic Verna} \hfill Score: 91.73\% (1st Rank)
+\begin{itemize}
+    \item Actively participated in college activities, served as Magazine Secretary, and contributed to event organization.
+\end{itemize}
+
+% ================= TECHNICAL SKILLS =================
+\section*{Technical Skills}
+\noindent \textbf{Languages:} JavaScript, TypeScript, Python, Java, C++, C\#, C, Dart, PHP, SQL \\
+\textbf{Frameworks \& Libraries:} React.js, Next.js, Node.js, FastAPI, Tailwind CSS, Bootstrap, Flutter \\
+\textbf{Tools \& Platforms:} Firebase, Supabase, PostgreSQL, OpenCV \\
+\textbf{Interests:} UI/UX Design, Content Writing, Arduino Programming
+
+% ================= WORK EXPERIENCE =================
+\section*{Work Experience}
+\noindent \textbf{FrontEnd Web Developer} \hfill \textit{Jul 2023 -- Sep 2023} \\
+\textit{Deviant Strokes}
+\begin{itemize}
+    \item Engineered and maintained responsive company websites, significantly enhancing user interface (UI) and overall functionality.
+    \item Collaborated with marketing teams to deploy digital content and execute online marketing strategies.
+    \item Gained hands-on experience in modern web development tools, version control, and production-level deployments.
+\end{itemize}
+
+% ================= PROJECTS =================
+\section*{Projects}
+
+% REPLACE 'YOUR-REPO-LINK' WITH ACTUAL GITHUB URL
+\noindent \href{https://github.com/awk-way/gdg}{\large\textbf{AgriBase}} \hfill \textit{Next.js, Firebase, Tailwind CSS}
+\begin{itemize}
+    \item Architected an enterprise-grade "Bio-Digital Twin" platform simulating the Soil-Plant-Atmosphere continuum to convert raw environmental telemetry into actionable agricultural and financial insights.
+    \item Engineered scalable dashboards combining hyperspectral crop analysis, ensemble AI pathology diagnostics, and dynamic financial forecasting to optimize farm ROI.
+    \item Developed a full-stack solution bridging satellite data processing with a localized, multilingual mobile portal to promote financial inclusion for smallholder farmers.
+\end{itemize}
+
+\vspace{1ex}
+
+% REPLACE 'YOUR-REPO-LINK' WITH ACTUAL GITHUB URL
+\noindent \href{https://github.com/awk-way/learning}{\large\textbf{SignSense}} \hfill \textit{Python, OpenCV, Deep Learning}
+\begin{itemize}
+    \item Developed a real-time sign language recognition system utilizing computer vision to interpret hand gestures and convert them into readable text.
+    \item Implemented deep learning models for gesture classification, enabling highly accurate detection of alphabet and word-level signs from live webcam input.
+\end{itemize}
+
+\vspace{1ex}
+
+% REPLACE 'YOUR-REPO-LINK' WITH ACTUAL GITHUB URL
+\noindent \href{https://github.com/awk-way/arogyaan-dash}{\large\textbf{ArogyaYaan}} \hfill \textit{Next.js, Go (Gin), Supabase}
+\begin{itemize}
+    \item Developed an interactive web dashboard using Next.js to visualize real-time medical inventory, agent decisions, and supplier workflows (Built at MumbaiHacks 2025).
+    \item Integrated responsive frontend interfaces with a high-performance Go backend and scalable PostgreSQL database.
+\end{itemize}
+
+\vspace{1ex}
+
+% REPLACE 'YOUR-REPO-LINK' WITH ACTUAL GITHUB URL
+\noindent \href{https://github.com/vedeeka/launch_frontend}{\large\textbf{PawConnect}} \hfill \textit{Next.js, React.js}
+\begin{itemize}
+    \item Co-developed a dedicated social platform for pet owners to share moments, report stray animals, and broadcast lost pet alerts.
+    \item Designed a user-friendly UI ensuring smooth navigation and engaging community interaction through profiles, photo sharing, and commenting systems.
+\end{itemize}
+
+\end{document}
