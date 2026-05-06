@@ -36,7 +36,7 @@ for i in range(1, n+1):
     h_val = int(input(f"Enter heuristic value of {i}: "))
     graph[i] = neighbours
     heuristic[i] = h_val
-start = int(input("Enter start node: "))
+start = int(input("\nEnter start node: "))
 goal = int(input("Enter goal node: "))
 path = best_first_search(graph, start, goal, heuristic)
 
