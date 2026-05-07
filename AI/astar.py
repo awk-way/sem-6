@@ -3,17 +3,11 @@ import heapq
 def a_star(start, goal):
     open_list = []
     heapq.heappush(open_list, (0, start))
-
     g_cost = {node: float('inf') for node in graph}
-    g_cost[start] = 0
-
-    parent = {start: None}
-
-    closed_list = set()
+    g_cost[start], parent, closed_list = 0, {start: None}, set()
 
     while open_list:
         current_f, current = heapq.heappop(open_list)
-
         if current == goal:
             path = []
             while current:
@@ -26,7 +20,6 @@ def a_star(start, goal):
         for neighbor, cost in graph[current].items():
             if neighbor in closed_list:
                 continue
-
             tentative_g = g_cost[current] + cost
 
             if tentative_g < g_cost[neighbor]:
@@ -52,5 +45,4 @@ for i in range(1, n+1):
 start = int(input("\nEnter start node: "))
 goal = int(input("Enter goal node: "))
 path, cost = a_star(start, goal)
-print("Optimal Path:", path)
-print("Total Cost:", cost)
+print (f"\nOptimal Path:{path}    Total Cost: {cost}")

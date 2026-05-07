@@ -22,7 +22,7 @@ def hill_climbing(func, start, step_size=0.1, max_iterations=100):
             current_x = right
             current_value = right_value
         else:
-            print("No better neighbors found. Algorithm converged.")
+            print("\nNo better neighbors found. Algorithm converged.")
             break
 
     return current_x, current_value

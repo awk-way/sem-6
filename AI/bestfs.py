@@ -1,16 +1,12 @@
 from heapq import heappush, heappop
 
 def best_first_search(graph, start, goal, heuristic):
-    open_list = []
+    open_list, closed_list = [], set()
     heappush(open_list, (heuristic[start], start))
-
-    closed_list = set()
     parent = {start: None}
 
     while open_list:
         h, current = heappop(open_list)
-
-        # Goal check
         if current == goal:
             path = []
             while current is not None:
@@ -19,11 +15,9 @@ def best_first_search(graph, start, goal, heuristic):
             return path[::-1]
 
         closed_list.add(current)
-
-        # Explore neighbors
         for neighbour in graph[current]:
             if neighbour not in closed_list:
-                if neighbour not in parent:  # avoid overwriting parent
+                if neighbour not in parent:  
                     parent[neighbour] = current
                 heappush(open_list, (heuristic[neighbour], neighbour))
 
@@ -40,4 +34,4 @@ start = int(input("\nEnter start node: "))
 goal = int(input("Enter goal node: "))
 path = best_first_search(graph, start, goal, heuristic)
 
-print("Path found:", path)
+print("\nPath found:", path)
