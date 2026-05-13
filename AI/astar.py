@@ -1,12 +1,20 @@
 import heapq
 
+def display_open_list(open_list, g_cost):
+    print(f"\n{'Node':<10}{'g':<10}{'h':<10}{'f':<10}")
+    print("-" * 40)
+    temp = sorted(open_list)
+    for f, node in temp:
+        print(f"{node:<10}{g_cost[node]:<10}{heuristic[node]:<10}{f:<10}")
+
 def a_star(start, goal):
     open_list = []
     heapq.heappush(open_list, (0, start))
     g_cost = {node: float('inf') for node in graph}
     g_cost[start], parent, closed_list = 0, {start: None}, set()
-
+    
     while open_list:
+        display_open_list(open_list, g_cost)
         current_f, current = heapq.heappop(open_list)
         if current == goal:
             path = []
