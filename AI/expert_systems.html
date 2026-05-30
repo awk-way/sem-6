@@ -4,98 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Depression Expert System for IT Employees</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 30px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-
-    p.description {
-      text-align: center;
-      color: #555;
-      margin-bottom: 30px;
-    }
-
-    .question {
-      margin-bottom: 20px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: #fafafa;
-    }
-
-    .question h3 {
-      margin: 0 0 10px;
-      font-size: 17px;
-    }
-
-    select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      background: #3498db;
-      color: white;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background: #2980b9;
-    }
-
-    .result {
-      margin-top: 30px;
-      padding: 20px;
-      border-radius: 10px;
-      background: #eef6ff;
-      display: none;
-    }
-
-    .score {
-      font-size: 22px;
-      font-weight: bold;
-      color: #2c3e50;
-    }
-
-    .recommendation {
-      margin-top: 10px;
-      font-size: 17px;
-      line-height: 1.6;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 20px;
-      color: #777;
-      font-size: 14px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -158,34 +67,65 @@ questions.forEach((question, index) => {
 });
 
 function evaluateDepression() {
+  const weights = [
+    2, 2, 2, 3, 3,
+    2, 2, 2, 2, 3,
+    1, 2, 3, 2, 2,
+    2, 3, 2, 3, 3
+  ];
   let totalScore = 0;
+  let detectedSymptoms = [];
   for (let i = 0; i < questions.length; i++) {
-    totalScore += parseInt(document.getElementById(`q${i}`).value);
+    const answer = parseInt(document.getElementById(`q${i}`).value);
+    totalScore += answer * weights[i];
+    if (answer >= 3) {
+      detectedSymptoms.push(questions[i]);
+    }
   }
   let level = "";
   let advice = "";
-  if (totalScore <= 20) {
-    level = "Low Risk of Depression";
-    advice = "Your responses indicate relatively healthy emotional well-being. Continue maintaining work-life balance, exercise, and social interaction.";
+  let condition = "";
+  if (totalScore <= 25) {
+    level = "Psychologically Stable";
+    condition = "No Clinically Significant Depressive Indicators";
+    advice = "The assessment does not indicate clinically significant depressive symptomatology. Current responses suggest manageable occupational stress levels and generally stable emotional functioning.";
+  } else if (totalScore <= 45) {
+    level = "Subclinical Depressive State";
+    condition = "Early-Stage Depressive Symptom Presentation";
+    advice = "The responses indicate emerging depressive tendencies including emotional fatigue, stress sensitivity, and reduced psychological resilience. Preventive intervention and lifestyle regulation are advisable.";
+  } else if (totalScore <= 65) {
+    level = "Clinically Moderate Depression";
+    condition = "Moderate Depressive Symptomatology";
+    advice = "The assessment reflects clinically relevant depressive symptoms associated with occupational burnout, emotional exhaustion, cognitive strain, and reduced motivation. Psychological consultation is recommended.";
+  } else if (totalScore <= 85) {
+    level = "Major Depressive State";
+    condition = "Moderately Severe Major Depressive Presentation";
+    advice = "The responses indicate substantial depressive symptom severity affecting emotional regulation, concentration, productivity, social engagement, and occupational functioning. Professional mental health intervention is strongly advised.";
+  } else {
+    level = "Severe Major Depressive Disorder Risk";
+    condition = "Severe Depressive and Burnout Presentation";
+    advice = "The assessment reflects severe depressive symptom indicators including persistent emotional distress, psychological exhaustion, social withdrawal, and functional impairment. Immediate professional psychiatric or psychological support is strongly recommended.";
   }
-  else if (totalScore <= 40) {
-    level = "Moderate Risk of Depression";
-    advice = "You may be experiencing stress and emotional exhaustion. Consider reducing workload pressure, improving sleep habits, and speaking with trusted people.";
-  }
-  else if (totalScore <= 60) {
-    level = "High Risk of Depression";
-    advice = "Your responses suggest strong signs of emotional distress and workplace burnout. It is recommended to consult a mental health professional or counselor.";
-  }
-  else {
-    level = "Severe Risk of Depression";
-    advice = "Your responses indicate severe emotional strain and possible depression symptoms. Professional psychological support is strongly recommended.";
+
+  let symptomHTML = "";
+  if (detectedSymptoms.length > 0) {
+    symptomHTML += "<h3>Detected Symptoms are answers from the following: </h3><ul>";
+    detectedSymptoms.forEach(symptom => {
+      symptomHTML += `<li>${symptom}</li>`;
+    });
+    symptomHTML += "</ul>";
   }
   document.getElementById("resultBox").style.display = "block";
   document.getElementById("scoreText").innerHTML = `
-    Total Score: ${totalScore}/80 <br><br>
-    Result: ${level}
+    Total Weighted Score: ${totalScore}<br><br>
+    Depression Level: <b>${level}</b><br><br>
+    Detected Condition: <b>${condition}</b>
   `;
-  document.getElementById("recommendationText").innerHTML = advice;
+  document.getElementById("recommendationText").innerHTML = `
+    ${advice}
+    <br><br>
+    ${symptomHTML}
+  `;
   window.scrollTo({
     top: document.body.scrollHeight,
     behavior: 'smooth'
