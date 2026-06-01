@@ -67,68 +67,154 @@ questions.forEach((question, index) => {
 });
 
 function evaluateDepression() {
-  const weights = [
-    2, 2, 2, 3, 3,
-    2, 2, 2, 2, 3,
-    1, 2, 3, 2, 2,
-    2, 3, 2, 3, 3
-  ];
-  let totalScore = 0;
+  let stressScore = 0;
+  let burnoutScore = 0;
+  let anxietyScore = 0;
+  let depressionScore = 0;
   let detectedSymptoms = [];
   for (let i = 0; i < questions.length; i++) {
     const answer = parseInt(document.getElementById(`q${i}`).value);
-    totalScore += answer * weights[i];
     if (answer >= 3) {
       detectedSymptoms.push(questions[i]);
     }
-  }
-  let level = "";
-  let advice = "";
-  let condition = "";
-  if (totalScore <= 25) {
-    level = "Psychologically Stable";
-    condition = "No Clinically Significant Depressive Indicators";
-    advice = "The assessment does not indicate clinically significant depressive symptomatology. Current responses suggest manageable occupational stress levels and generally stable emotional functioning.";
-  } else if (totalScore <= 45) {
-    level = "Subclinical Depressive State";
-    condition = "Early-Stage Depressive Symptom Presentation";
-    advice = "The responses indicate emerging depressive tendencies including emotional fatigue, stress sensitivity, and reduced psychological resilience. Preventive intervention and lifestyle regulation are advisable.";
-  } else if (totalScore <= 65) {
-    level = "Clinically Moderate Depression";
-    condition = "Moderate Depressive Symptomatology";
-    advice = "The assessment reflects clinically relevant depressive symptoms associated with occupational burnout, emotional exhaustion, cognitive strain, and reduced motivation. Psychological consultation is recommended.";
-  } else if (totalScore <= 85) {
-    level = "Major Depressive State";
-    condition = "Moderately Severe Major Depressive Presentation";
-    advice = "The responses indicate substantial depressive symptom severity affecting emotional regulation, concentration, productivity, social engagement, and occupational functioning. Professional mental health intervention is strongly advised.";
-  } else {
-    level = "Severe Major Depressive Disorder Risk";
-    condition = "Severe Depressive and Burnout Presentation";
-    advice = "The assessment reflects severe depressive symptom indicators including persistent emotional distress, psychological exhaustion, social withdrawal, and functional impairment. Immediate professional psychiatric or psychological support is strongly recommended.";
+    switch(i){
+      // STRESS
+      case 0:
+      case 3:
+      case 6:
+      case 10:
+      case 14:
+      case 17:
+        stressScore += answer;
+        break;
+      // BURNOUT
+      case 0:
+      case 2:
+      case 4:
+      case 7:
+      case 10:
+      case 15:
+        burnoutScore += answer;
+        break;
+      // ANXIETY
+      case 3:
+      case 6:
+      case 8:
+      case 13:
+      case 16:
+      case 19:
+        anxietyScore += answer;
+        break;
+      // DEPRESSION
+      case 1:
+      case 4:
+      case 5:
+      case 9:
+      case 11:
+      case 12:
+      case 18:
+      case 19:
+        depressionScore += answer;
+        break;
+    }
   }
 
+  function getLevel(score, maxScore) {
+    const percentage = (score / maxScore) * 100;
+    if (percentage < 20) return "Minimal";
+    if (percentage < 40) return "Mild";
+    if (percentage < 60) return "Moderate";
+    if (percentage < 80) return "High";
+    return "Very High";
+  }
+
+  const stressLevel = getLevel(stressScore, 24);
+  const burnoutLevel = getLevel(burnoutScore, 24);
+  const anxietyLevel = getLevel(anxietyScore, 24);
+  const depressionLevel = getLevel(depressionScore, 32);
+  let overallResult = "";
+  const levels = [stressLevel, burnoutLevel, anxietyLevel, depressionLevel];
+  if (levels.includes("Very High")) {
+      overallResult = "Critical Mental Health Risk";
+  }
+  else if (levels.includes("High")) {
+      overallResult = "High Mental Health Risk";
+  }
+  else if (levels.includes("Moderate")) {
+      overallResult = "Moderate Mental Health Risk";
+  }
+  else if (levels.includes("Mild")) {
+      overallResult = "Mild Mental Health Risk";
+  }
+  else {
+      overallResult = "Minimal Mental Health Risk";
+  }
   let symptomHTML = "";
-  if (detectedSymptoms.length > 0) {
-    symptomHTML += "<h3>Detected Symptoms are answers from the following: </h3><ul>";
-    detectedSymptoms.forEach(symptom => {
-      symptomHTML += `<li>${symptom}</li>`;
-    });
-    symptomHTML += "</ul>";
+  if(detectedSymptoms.length > 0){
+      symptomHTML += "<h3>Frequently Reported Symptoms</h3><ul>";
+      detectedSymptoms.forEach(symptom=>{
+          symptomHTML += `<li>${symptom}</li>`;
+      });
+      symptomHTML += "</ul>";
+  }
+  let recommendation = "";
+  if (overallResult === "Minimal Mental Health Risk") {
+      recommendation = "The assessment indicates good psychological well-being with minimal signs of stress, burnout, anxiety, or depression. Continue maintaining a healthy work-life balance, regular physical activity, sufficient sleep, and positive social interactions.";
+  }
+  else if (overallResult === "Mild Mental Health Risk") {
+      recommendation = "The assessment suggests early signs of psychological strain. Consider monitoring your stress levels, taking regular breaks during work, maintaining healthy routines, and engaging in activities that promote relaxation and mental well-being.";
+  }
+  else if (overallResult === "Moderate Mental Health Risk") {
+      recommendation = "The assessment indicates noticeable levels of stress, burnout, anxiety, or depressive symptoms. It is advisable to improve workload management, prioritize self-care, seek support from trusted individuals, and consider consulting a mental health professional if symptoms persist.";
+  }
+  else if (overallResult === "High Mental Health Risk") {
+      recommendation = "The assessment suggests significant psychological distress that may be affecting daily functioning, productivity, and emotional well-being. Professional counseling or psychological support is strongly recommended. Reducing excessive workload and improving work-life balance should be prioritized.";
+  }
+  else {
+      recommendation = "The assessment indicates severe psychological distress and a high likelihood of serious mental health concerns. Immediate consultation with a qualified mental health professional is strongly recommended. Early intervention and appropriate support can significantly improve outcomes and overall well-being.";
   }
   document.getElementById("resultBox").style.display = "block";
   document.getElementById("scoreText").innerHTML = `
-    Total Weighted Score: ${totalScore}<br><br>
-    Depression Level: <b>${level}</b><br><br>
-    Detected Condition: <b>${condition}</b>
+      <h2>Assessment Results</h2>
+      <table style="width:100%; border-collapse: collapse;">
+        <tr>
+          <th style="text-align:left;">Condition</th>
+          <th style="text-align:left;">Score</th>
+          <th style="text-align:left;">Level</th>
+        </tr>
+        <tr>
+          <td>Stress</td>
+          <td>${stressScore}/24</td>
+          <td>${stressLevel}</td>
+        </tr>
+        <tr>
+          <td>Burnout</td>
+          <td>${burnoutScore}/24</td>
+          <td>${burnoutLevel}</td>
+        </tr>
+        <tr>
+          <td>Anxiety</td>
+          <td>${anxietyScore}/24</td>
+          <td>${anxietyLevel}</td>
+        </tr>
+        <tr>
+          <td>Depression</td>
+          <td>${depressionScore}/32</td>
+          <td>${depressionLevel}</td>
+        </tr>
+      </table>
+      <br>
+      <b>Overall Assessment:</b> ${overallResult}
   `;
   document.getElementById("recommendationText").innerHTML = `
-    ${advice}
-    <br><br>
-    ${symptomHTML}
+      <b>Recommendation:</b><br><br>
+      ${recommendation}
+      <br><br>
+      ${symptomHTML}
   `;
   window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: 'smooth'
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
   });
 }
 </script>
