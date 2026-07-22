@@ -1,3 +1,4 @@
+#Distance Vector Routing Algorithm
 def bellman_ford(graph, vertices, source):
     dist = [float("inf")] * vertices
     dist[source] = 0

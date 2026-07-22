@@ -1,3 +1,4 @@
+#Web Server
 from socket import *
 serverPort = 8080
 serverSocket = socket(AF_INET, SOCK_STREAM)
@@ -24,7 +25,7 @@ while True:
         filename = message.split()[1]
         filepath = filename[1:]
         if filepath == "":
-            filepath = "mcn_practical/webserver/index.html"
+            filepath = "Practical/webserver/index.html"
         
         if filepath == "favicon.ico":
             connectionSocket.close()

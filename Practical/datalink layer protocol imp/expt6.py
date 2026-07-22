@@ -1,3 +1,4 @@
+#Stop and Wait Datalink Layer Protocol
 import random
 import time
 def stop_and_wait_arq(total_frames):

@@ -1,3 +1,4 @@
+#Link State Routing Algorithm
 import heapq
 
 def dijkstra(graph, start):
