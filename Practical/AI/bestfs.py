@@ -4,7 +4,6 @@ def best_first_search(graph, start, goal, heuristic):
     open_list, closed_list = [], set()
     heappush(open_list, (heuristic[start], start))
     parent = {start: None}
-
     while open_list:
         h, current = heappop(open_list)
         if current == goal:
@@ -20,7 +19,6 @@ def best_first_search(graph, start, goal, heuristic):
                 if neighbour not in parent:  
                     parent[neighbour] = current
                 heappush(open_list, (heuristic[neighbour], neighbour))
-
     return None
 
 graph, heuristic = {}, {}
@@ -33,5 +31,4 @@ for i in range(1, n+1):
 start = int(input("\nEnter start node: "))
 goal = int(input("Enter goal node: "))
 path = best_first_search(graph, start, goal, heuristic)
-
 print("\nPath found:", path)

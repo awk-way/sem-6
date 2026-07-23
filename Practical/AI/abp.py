@@ -1,11 +1,9 @@
 import math
 tree = {}
-
 def alpha_beta(node, alpha, beta, maximizing):
     if isinstance(tree[node], int):
         print(f"Leaf Node {node} -> Value = {tree[node]}")
         return tree[node]
-
     if maximizing:
         value = -math.inf
         print(f"\nMAX Node {node}")

@@ -1,13 +1,10 @@
 from collections import deque
-
 def bfs(graph, n):
     visited, res = [False] * n, []
     q = deque()
-    
     s = 0
     q.append(s)
     visited[s] = True
-
     while q:
         u = q.popleft()
         res.append(u)
