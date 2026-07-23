@@ -22,5 +22,4 @@ n = (int(input("Enter the number of vertices: ")))
 for i in range (n):
     edges = list(map(int, input(f"Enter neighbours of {i}: ").split()))
     graph[i] = edges
-
 bfs(graph, n)

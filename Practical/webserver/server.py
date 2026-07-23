@@ -8,25 +8,18 @@ serverSocket.listen(1)
 
 print(f"Server running at http://localhost:{serverPort}")
 
-
-
 while True:
     print("\nWaiting for connection...")
     connectionSocket, addr = serverSocket.accept()
     print("Connected by:", addr)
-
-
     try:
         message = connectionSocket.recv(1024).decode()
         print("\nREQUEST:\n")
         print(message)
-
-
         filename = message.split()[1]
         filepath = filename[1:]
         if filepath == "":
             filepath = "Practical/webserver/index.html"
-        
         if filepath == "favicon.ico":
             connectionSocket.close()
             continue
@@ -46,7 +39,6 @@ while True:
 
     except FileNotFoundError:
         print("404 File Not Found")
-        
         error_html = b"""
                         <html>
                         <head><title>404 Error</title></head>
@@ -55,13 +47,11 @@ while True:
                         </body>
                         </html>
                         """
-
         response = b"HTTP/1.1 404 Not Found\r\n"
         response += b"Content-Type: text/html\r\n"
         response += b"Content-Length: " + str(len(error_html)).encode() + b"\r\n"
         response += b"Connection: close\r\n"
         response += b"\r\n"
-        
         connectionSocket.sendall(response)
         connectionSocket.sendall(error_html)
     except Exception as e:
